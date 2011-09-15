@@ -116,7 +116,6 @@ bool Timer::is_paused()
 
 int Timer::tick(){
     float ticksSinceLast = SDL_GetTicks() - lasttick;
-    std::cout << "ticksSinceLast: "<< ticksSinceLast << std::endl;
     float ticksPerFrame = 1000/fps;
     float delta = ticksPerFrame - ticksSinceLast;
     
