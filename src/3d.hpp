@@ -20,6 +20,15 @@
 
 #include <vector>
 
+class Vector3d {
+public:
+    float x,y,z;
+    Vector3d(float,float,float);
+    Vector3d(float);
+    Vector3d();
+    Vector3d normalize();
+};
+
 class vertex {
 public:
     float r, g, b, a;
@@ -39,9 +48,21 @@ public:
     int setScale(float,float,float);
     int addVertex(vertex);
     int render();
+    Vector3d getNormal();
 private:
     std::vector<vertex> vertexes;
 };
 
+class object {
+public:
+    float rotx, roty, rotz;
+    float scalex, scaley, scalez;
+    std::vector<face> faces;
+    object();
+    int addFace(face);
+    int render();
+    int setScale(float,float,float);
+    int setRotation(float,float,float);
+};
 //include "3d.cpp" // funtzt so, auskommentiert nicht
 #endif /* WING_HPP */

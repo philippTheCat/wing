@@ -104,8 +104,12 @@ int wi::render(){
   
   vertex v1;
     v1.setPosition(-1,-1,0);
-    v1.setColor(1.0,0,0,1);
-
+    v1.setColor(1,1,1,1);
+    
+    vertex v2;
+    v2.setPosition(-1,1,0);
+     v2.setColor(0,0,1,1);
+     
     vertex v3;
     v3.setPosition(1,-1,0);
     v3.setColor(0,1,0,1);
@@ -121,8 +125,16 @@ int wi::render(){
         f.addVertex(v1);
         f.addVertex(v3);
         f.addVertex(v4);
-        f.render();
+        
+        face f2;
+        f2.addVertex(v1);
+        f2.addVertex(v3);
+        f2.addVertex(v2);
 
+        object obj;
+        obj.addFace(f);
+        obj.addFace(f2);
+        obj.render();
  
 
   SDL_GL_SwapBuffers();

@@ -22,6 +22,21 @@
 #include <iostream>
 using namespace std;
 
+Vector3d::Vector3d(float _x,float _y ,float _z){
+    this->x = _x;
+    this->y = _y;
+    this->z = _z;
+}
+Vector3d::Vector3d(float s){
+    Vector3d(s,s,s);
+}
+Vector3d::Vector3d(){
+    Vector3d(1,1,1);
+}
+
+
+
+
 vertex::vertex(){
     this->x,this->y,this->z = 0;
     this->r = 1.0;
@@ -49,7 +64,7 @@ void vertex::render(){
 }
 
 face::face(){
-    setScale(1,1,1);
+    this->setScale(1,1,1);
 }
 
 int face::addVertex(vertex v){
@@ -93,6 +108,69 @@ int face::setRotation(float x, float y, float z){
 }
 
 int face::setScale(float x, float y , float z ){
+    this->scalex = x;
+    this->scaley = y;
+    this->scalez = z;
+    return 1;
+}
+
+Vector3d face::getNormal(){
+    GLfloat Qx, Qy, Qz, Px, Py, Pz;
+
+    if (vertexes.size() < 3){
+        Vector3d v;
+        return v;
+    }
+    
+    vertex fVert1 = vertexes[0];
+    vertex fVert2 = vertexes[1];
+    vertex fVert3 = vertexes[2];
+    
+    
+   Qx = fVert2.x-fVert1.x;
+   Qy = fVert2.y-fVert1.y;
+   Qz = fVert2.z-fVert1.z;
+   Px = fVert3.x-fVert1.x;
+   Py = fVert3.y-fVert1.y;
+   Pz = fVert3.z-fVert1.z;
+
+  float fNormalX = Py*Qz - Pz*Qy;
+  float fNormalY = Pz*Qx - Px*Qz;
+  float fNormalZ = Px*Qy - Py*Qx;
+  
+  return Vector3d(fNormalX,fNormalY,fNormalZ);
+}
+
+object::object(){
+    this->setScale(1,1,1);
+}
+
+int object::addFace(face f){
+    this->faces.push_back(f);
+    return 1;
+}
+
+int object::render() {
+    glPushMatrix();
+        glScalef (scalex,scaley,scalez);
+        glRotatef(rotx,1,0,0);
+        glRotatef(roty,0,1,0);
+        glRotatef(rotz,0,0,1);
+
+        for (vector<face>::iterator it = faces.begin(); it != faces.end(); ++it) {
+            ((face) * it).render();
+        }
+    glPopMatrix();
+}
+
+int object::setRotation(float x, float y, float z){
+    this->rotx = x;
+    this->roty = y;
+    this->rotz = z;
+    return 1;
+}
+
+int object::setScale(float x, float y , float z ){
     this->scalex = x;
     this->scaley = y;
     this->scalez = z;
