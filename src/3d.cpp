@@ -22,6 +22,13 @@
 #include <iostream>
 using namespace std;
 
+string convertDouble(double value) {
+  std::ostringstream o;
+  if (!(o << value))
+    return "";
+  return o.str();
+}
+
 Vector3d::Vector3d(float _x,float _y ,float _z){
     this->x = _x;
     this->y = _y;
@@ -63,6 +70,19 @@ void vertex::render(){
     glVertex3f(x,y,z); // Der erste Eckpunkt ist mittig und 100 Pixel
 }
 
+string vertex::toString(){
+    std::ostringstream out;
+    out << "<vertex on x: ";
+    out << x;
+    out << " y: ";
+    out << y;
+    out << " z: ";
+    out << z;
+    out << ">";
+    out << endl;
+    return out.str();
+    //return "<vertex on x: " << convertDouble(x).c_str() << " y: " << y << " z: " << z << " >";
+}
 face::face(){
     this->setScale(1,1,1);
 }

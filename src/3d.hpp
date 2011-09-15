@@ -19,6 +19,12 @@
 
 
 #include <vector>
+#include <iostream>
+#include <sstream>
+#include <windows.h>
+
+using namespace std;
+using std::string;
 
 class Vector3d {
 public:
@@ -37,6 +43,7 @@ public:
     void setColor(float r, float g, float b, float a);
     void setPosition(float x, float y, float z);
     void render();
+    string toString();
 };
 
 class face {

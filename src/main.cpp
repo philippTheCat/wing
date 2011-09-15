@@ -19,19 +19,22 @@
 #include <sstream>
 #include <windows.h>
 
+using namespace std;
+using std::string;
 
 //3d includes
 #include "SDL/SDL_opengl.h" 
 #include <GL/glu.h>
 
-using namespace std;
 
 
 //engine
 #include "wing.hpp"
 #include "3d.hpp"
 #include "timer.hpp"
-using std::string;
+#include "importers.hpp"
+
+
 
 
 const int SCREEN_WIDTH = 640;
@@ -51,6 +54,7 @@ SDL_Event event;
 
 class wi : public wing {
 	public:
+            object obj;
 	 int setUp();
 	 int render();
          int update();
@@ -82,12 +86,10 @@ int wi::update() {
 }
 
 int wi::setUp(){
+    obj = importObj("data/cube.obj");
     rotation = 0;
-    //Start the update timer
     
-    //Start the frame timer
-
-	return true;
+    return true;
 }
 
 int wi::render(){
@@ -102,41 +104,7 @@ int wi::render(){
          0,0,0,
          0,1,0); 
   
-  vertex v1;
-    v1.setPosition(-1,-1,0);
-    v1.setColor(1,1,1,1);
-    
-    vertex v2;
-    v2.setPosition(-1,1,0);
-     v2.setColor(0,0,1,1);
-     
-    vertex v3;
-    v3.setPosition(1,-1,0);
-    v3.setColor(0,1,0,1);
-
-    
-    vertex v4;
-    v4.setPosition(0,1,0);
-     v4.setColor(0,0,1,1);
-
-        rotation += 3;
-
-        face f;
-        f.addVertex(v1);
-        f.addVertex(v3);
-        f.addVertex(v4);
-        
-        face f2;
-        f2.addVertex(v1);
-        f2.addVertex(v3);
-        f2.addVertex(v2);
-
-        object obj;
-        obj.addFace(f);
-        obj.addFace(f2);
-        obj.render();
- 
-
+ obj.render();
   SDL_GL_SwapBuffers();
   
   fps.tick();
