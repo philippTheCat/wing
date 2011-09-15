@@ -16,6 +16,9 @@
 
 #include "SDL/SDL.h"
 #include "timer.hpp"
+
+
+#include <iostream>
 Timer::Timer()
 {
     //Initialize the variables
@@ -35,6 +38,10 @@ void Timer::start()
 
     //Get the current clock time
     startTicks = SDL_GetTicks();
+    
+    lasttick = startTicks;
+    
+    fps = 60;
 }
 
 void Timer::stop()
@@ -105,4 +112,18 @@ bool Timer::is_started()
 bool Timer::is_paused()
 {
     return paused;
+}
+
+int Timer::tick(){
+    float ticksSinceLast = SDL_GetTicks() - lasttick;
+    std::cout << "ticksSinceLast: "<< ticksSinceLast << std::endl;
+    float ticksPerFrame = 1000/fps;
+    float delta = ticksPerFrame - ticksSinceLast;
+    
+    lasttick = SDL_GetTicks();
+    if (delta < 0){
+        std::cout << "error, tried to sleep for " << delta << " ticks" << std::endl;
+    } else {
+        SDL_Delay(delta);
+    }
 }

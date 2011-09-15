@@ -33,6 +33,8 @@ class Timer
     bool paused;
     bool started;
 
+    int lasttick;
+    int fps;
     public:
     //Initializes variables
     Timer();
@@ -46,6 +48,7 @@ class Timer
     //Gets the timer's time
     int get_ticks();
 
+    int tick();
     //Checks the status of the timer
     bool is_started();
     bool is_paused();

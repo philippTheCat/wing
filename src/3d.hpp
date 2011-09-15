@@ -22,24 +22,26 @@
 
 class vertex {
 public:
-    float r,g,b,a;
-    float x,y,z;
+    float r, g, b, a;
+    float x, y, z;
     vertex();
     void setColor(float r, float g, float b, float a);
-    void setPosition(float x, float y,float z);
+    void setPosition(float x, float y, float z);
     void render();
 };
 
-class face{
+class face {
 public:
-    float rotx,roty,rotz;
-    int setRotation(float,float,float);
-	int addVertex(vertex);
-	int render();
+    face();
+    float rotx, roty, rotz;
+    float scalex, scaley, scalez;
+    int setRotation(float, float, float);
+    int setScale(float,float,float);
+    int addVertex(vertex);
+    int render();
 private:
-	std::vector<vertex> vertexes;			
+    std::vector<vertex> vertexes;
 };
-
 
 //include "3d.cpp" // funtzt so, auskommentiert nicht
 #endif /* WING_HPP */

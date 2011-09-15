@@ -49,10 +49,6 @@ const int SQUARE_HEIGHT = 20;
 SDL_Event event;
 
 
-
-
-
-
 class wi : public wing {
 	public:
 	 int setUp();
@@ -64,7 +60,7 @@ class wi : public wing {
             
         //Timer used to update the caption
         Timer updateFPS;
-        int rotation;
+        double rotation;
 };
 int wi::run(){
     while (update()){
@@ -81,20 +77,6 @@ int wi::update() {
         }
     }
 
-        if( updateFPS.get_ticks() > 1000 )
-        {
-            //The frame rate as a string
-            stringstream caption;
-            
-            //Calculate the frames per second and create the string
-            caption << "Average Frames Per Second: " << frame / ( fps.get_ticks() / 1000.f );
-            
-            //Reset the caption
-            SDL_WM_SetCaption( caption.str().c_str(), NULL );
-            
-            //Restart the update timer
-            updateFPS.start();    
-        }
 
     return true;
 }
@@ -102,7 +84,6 @@ int wi::update() {
 int wi::setUp(){
     rotation = 0;
     //Start the update timer
-    updateFPS.start();
     
     //Start the frame timer
 
@@ -120,38 +101,33 @@ int wi::render(){
          5,5,-5,
          0,0,0,
          0,1,0); 
- glBegin(GL_TRIANGLES);
   
   vertex v1;
     v1.setPosition(-1,-1,0);
     v1.setColor(1.0,0,0,1);
 
-        vertex v3;
+    vertex v3;
     v3.setPosition(1,-1,0);
-        v3.setColor(0,1,0,1);
+    v3.setColor(0,1,0,1);
 
     
     vertex v4;
     v4.setPosition(0,1,0);
-        v4.setColor(0,0,1,1);
+     v4.setColor(0,0,1,1);
+
+        rotation += 3;
 
         face f;
         f.addVertex(v1);
         f.addVertex(v3);
         f.addVertex(v4);
         f.render();
-    glEnd();
 
  
 
-  frame++;
   SDL_GL_SwapBuffers();
-  if( fps.get_ticks() < 1000 / FRAMES_PER_SECOND  ) { 
-      //Sleep the remaining frame time 
-      cout << ( 1000 / FRAMES_PER_SECOND ) - fps.get_ticks() << endl;
-      //SDL_Delay(( 1000 / FRAMES_PER_SECOND ) - fps.get_ticks() ); 
-  }
-  fps.stop();
+  
+  fps.tick();
 }
 
 

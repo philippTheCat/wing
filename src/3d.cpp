@@ -43,11 +43,14 @@ void vertex::setPosition(float x, float y,float z){
 }
 
 void vertex::render(){
-
+    
     glColor3f(r,g,b);      // Ab jetzt werden alle gezeichneten Punkte rot
     glVertex3f(x,y,z); // Der erste Eckpunkt ist mittig und 100 Pixel
 }
 
+face::face(){
+    setScale(1,1,1);
+}
 
 int face::addVertex(vertex v){
     vertexes.push_back(v);
@@ -56,6 +59,7 @@ int face::addVertex(vertex v){
 
 int face::render(){
     glPushMatrix();
+    glScalef (scalex,scaley,scalez);
     glRotatef(rotx,1,0,0);
     glRotatef(roty,0,1,0);
     glRotatef(rotz,0,0,1);
@@ -85,5 +89,12 @@ int face::setRotation(float x, float y, float z){
     this->rotx = x;
     this->roty = y;
     this->rotz = z;
+    return 1;
+}
+
+int face::setScale(float x, float y , float z ){
+    this->scalex = x;
+    this->scaley = y;
+    this->scalez = z;
     return 1;
 }
