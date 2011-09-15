@@ -17,6 +17,8 @@
 //system includes
 #include <iostream>
 #include <sstream>
+#include <windows.h>
+
 
 //3d includes
 #include "SDL/SDL_opengl.h" 
@@ -62,7 +64,7 @@ class wi : public wing {
             
         //Timer used to update the caption
         Timer updateFPS;
-        int rotation = 0;
+        int rotation;
 };
 int wi::run(){
     while (update()){
@@ -98,17 +100,17 @@ int wi::update() {
 }
 
 int wi::setUp(){
+    rotation = 0;
     //Start the update timer
     updateFPS.start();
     
     //Start the frame timer
-    fps.start();
 
 	return true;
 }
 
 int wi::render(){
- 
+ fps.start();
  glClear(GL_COLOR_BUFFER_BIT);
  glClear(GL_DEPTH_BUFFER_BIT);
 
@@ -144,6 +146,12 @@ int wi::render(){
 
   frame++;
   SDL_GL_SwapBuffers();
+  if( fps.get_ticks() < 1000 / FRAMES_PER_SECOND  ) { 
+      //Sleep the remaining frame time 
+      cout << ( 1000 / FRAMES_PER_SECOND ) - fps.get_ticks() << endl;
+      //SDL_Delay(( 1000 / FRAMES_PER_SECOND ) - fps.get_ticks() ); 
+  }
+  fps.stop();
 }
 
 
@@ -159,6 +167,11 @@ int main(int argc, char *argv[]) {
 	}
 
         wi w;
+        
+        //fixing cout and cerr
+        freopen( "CON", "w", stdout );
+        freopen( "CON", "w", stderr );
+
 	w.setUp();
 	w.run();
         
