@@ -93,6 +93,7 @@ int wi::setUp(){
 }
 
 int wi::render(){
+
  fps.start();
  glClear(GL_COLOR_BUFFER_BIT);
  glClear(GL_DEPTH_BUFFER_BIT);
@@ -104,6 +105,38 @@ int wi::render(){
          0,0,0,
          0,1,0); 
   
+
+  //light
+  float position[]  =   {5,   5,    -5};
+  float ambient[]   =   {0.8, 0.8,  0.8, 1.0};
+  float diffuse[]   =   {0.8, 0.8,  0.8, 1.0};
+
+//    glLightfv(GL_LIGHT0, GL_AMBIENT,  ambient);
+//    glLightfv(GL_LIGHT0, GL_DIFFUSE,  diffuse);
+//    glLightfv(GL_LIGHT0, GL_POSITION, position);
+//    glEnable(GL_LIGHT0);
+ glBegin(GL_TRIANGLES);
+  
+  vertex v1;
+    v1.setPosition(-1,-1,0);
+    v1.setColor(1.0,0,0,1);
+
+        vertex v3;
+    v3.setPosition(1,-1,0);
+        v3.setColor(0,1,0,1);
+
+    
+    vertex v4;
+    v4.setPosition(0,1,0);
+        v4.setColor(0,0,1,1);
+
+        face f;
+        f.addVertex(v1);
+        f.addVertex(v3);
+        f.addVertex(v4);
+        //f.render();
+    glEnd();
+
  obj.render();
   SDL_GL_SwapBuffers();
   

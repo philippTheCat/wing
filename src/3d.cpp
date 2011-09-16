@@ -69,8 +69,8 @@ void vertex::setPosition(float x, float y,float z){
 
 void vertex::render(){
     
-    glColor3f(r,g,b);      // Ab jetzt werden alle gezeichneten Punkte rot
-    glVertex3f(x,y,z); // Der erste Eckpunkt ist mittig und 100 Pixel
+    glColor3f(r,g,b);      
+    glVertex3f(x,y,z); 
 }
 
 string vertex::toString(){
@@ -98,9 +98,9 @@ int face::addVertex(vertex v){
 int face::render(){
     glPushMatrix();
     glScalef (scalex,scaley,scalez);
-    glRotatef(rotx,1,0,0);
-    glRotatef(roty,0,1,0);
-    glRotatef(rotz,0,0,1);
+    //glRotatef(rotx,1,0,0);
+    //glRotatef(roty,0,1,0);
+    //glRotatef(rotz,0,0,1);
         switch (vertexes.size()){
             case 1:
                 glBegin(GL_POINT);
@@ -116,9 +116,15 @@ int face::render(){
         }
 
         int size = vertexes.size();
-        for (vector<vertex>::iterator it = vertexes.begin(); it!=vertexes.end(); ++it) {
-            ((vertex)*it).render();
+        //Vector3d normal = getNormal();
+        //glNormal3f(normal.x,normal.y,normal.z);
+        for (int i = 0; i<size; i++){
+            vertexes[i].render();
         }
+
+        //for (vector<vertex>::iterator it = vertexes.begin(); it!=vertexes.end(); it++) {
+            //((vertex)*it).render();
+        //}
         glEnd();
     glPopMatrix();
 }
@@ -179,6 +185,7 @@ int object::render() {
         glRotatef(rotx,1,0,0);
         glRotatef(roty,0,1,0);
         glRotatef(rotz,0,0,1);
+
 
         for (vector<face>::iterator it = faces.begin(); it != faces.end(); ++it) {
             ((face) * it).render();

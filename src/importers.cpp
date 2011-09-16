@@ -73,27 +73,27 @@ object importObj(string file){
                     if (nrs.size() == 3){
                         vertex v;
                         v.setPosition((float)nrs[0],(float)nrs[1],(float)nrs[2]);
-                        v.setColor(1,1,1,1);
+                        v.setColor(1,0,1,.8);
                         vertexes.push_back(v);
                         cout << v.toString() << endl; 
                     }
                     continue;
                 } else if (type.compare("f") == 0){
-                    cout << "new face:" << endl;
+                    //cout << "new face:" << endl;
                     string nr;
                   
                     std::vector<vertex> vrtxes;
 
               
                     while (iss >> nr) {
-                        cout << vertexes.size() << endl;
+                        //cout << vertexes.size() << endl;
                          istringstream nriss(nr, istringstream::in);
                          int n;
                          char c;
                          bool even = false;
                          while (nriss >> n) {
 
-                                cout << "vertex " << n << endl;
+                                //cout << "vertex " << n << endl;
                                 nriss >> c;
                                 nriss >> c;
                                 nriss >> c;
