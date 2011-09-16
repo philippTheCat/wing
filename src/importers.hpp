@@ -19,7 +19,7 @@
 
 #include <iostream>
 #include <sstream>
-#include <windows.h>
+//#include <windows.h>
 #include "3d.hpp"
 using namespace std;
 using std::string;

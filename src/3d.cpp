@@ -45,7 +45,10 @@ Vector3d::Vector3d(){
 
 
 vertex::vertex(){
-    this->x,this->y,this->z = 0;
+    this->x = 0;
+    this->y = 0;
+    this->z = 0;
+    
     this->r = 1.0;
     this->g = 1.0;
     this->b = 1.0;

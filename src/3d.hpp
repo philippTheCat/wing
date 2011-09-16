@@ -21,7 +21,7 @@
 #include <vector>
 #include <iostream>
 #include <sstream>
-#include <windows.h>
+//#include <windows.h>
 
 using namespace std;
 using std::string;
@@ -71,5 +71,4 @@ public:
     int setScale(float,float,float);
     int setRotation(float,float,float);
 };
-//include "3d.cpp" // funtzt so, auskommentiert nicht
 #endif /* WING_HPP */

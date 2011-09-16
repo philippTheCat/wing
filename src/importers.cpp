@@ -120,6 +120,8 @@ object importObj(string file){
             }
 
         }
+    } else {
+        cout << "error: could not load OBJ from file: " << file << endl;
     }
     
     objfile.close();
