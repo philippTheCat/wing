@@ -74,36 +74,36 @@ object importObj(string file){
                         vertex v;
                         v.setPosition((float)nrs[0],(float)nrs[1],(float)nrs[2]);
                         v.setColor(1,1,1,1);
+                        vertexes.push_back(v);
                         cout << v.toString() << endl; 
                     }
                     continue;
                 } else if (type.compare("f") == 0){
                     cout << "new face:" << endl;
                     string nr;
-                      cout << __LINE__ << endl;
                   
                     std::vector<vertex> vrtxes;
 
-                          cout << __LINE__ << endl;
               
                     while (iss >> nr) {
+                        cout << vertexes.size() << endl;
                          istringstream nriss(nr, istringstream::in);
-                         float n;
+                         int n;
                          char c;
+                         bool even = false;
                          while (nriss >> n) {
-                            cout << "vertex " << n << endl;
 
-                            while (nriss >> c) {
-                                cout << c << endl;
-                                break;
-                            }
-                            while (nriss >> c) {
-                                break;
-                            }
+                                cout << "vertex " << n << endl;
+                                nriss >> c;
+                                nriss >> c;
+                                nriss >> c;
+                                vrtxes.push_back(vertexes[n-1]);
+
+
+
                         }
 
                     }
-                    cout << __LINE__ << endl;
                     if (vrtxes.size() == 3){
                         face v;
                         v.addVertex(vrtxes[0]);
@@ -111,12 +111,14 @@ object importObj(string file){
                         v.addVertex(vrtxes[2]);
                         obj.addFace(v);
                         //cout << v.toString() << endl; 
+                    } else {
+                        cout << "error, face which is not a tri" << endl;
                     }
                     continue;
                 }
                 
             } catch (char * str) {
-                //silence is golden
+                cout << "error loading OBJ: " << str << endl;
             }
 
         }
@@ -126,5 +128,6 @@ object importObj(string file){
     
     objfile.close();
     
+    cout << __LINE__ << endl;   
     return obj;
 }

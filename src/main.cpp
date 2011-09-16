@@ -124,10 +124,11 @@ int main(int argc, char *argv[]) {
 
         wi w;
         
+#ifdef win32
         //fixing cout and cerr
         freopen( "CON", "w", stdout );
         freopen( "CON", "w", stderr );
-
+#endif
 	w.setUp();
 	w.run();
         
