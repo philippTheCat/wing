@@ -5,7 +5,7 @@ ifeq ($(UNAME), Linux)
 LINKFLAGS = -lSDLmain -lSDL -lglut -lGLU
 BINARY = wing
 else
-LINKFLAGS = -lmingw32 -lSDLmain -lSDL -lOpenGL32 -lGLU32
+LINKFLAGS = -lmingw32 -lSDLmain -lSDL -lOpenGL32 -lGLU32 -static-libgcc -static-libstdc++
 BINARY = wing.exe
 endif
 

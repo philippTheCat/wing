@@ -99,10 +99,11 @@ int wing::initGL(){
  
  glClear(GL_COLOR_BUFFER_BIT);
  glClear(GL_DEPTH_BUFFER_BIT);
+ 
+ glEnable(GL_CULL_FACE);
+glCullFace(GL_BACK);
 
 
-//  glEnable(GL_LIGHTING);
-//  glEnable(GL_COLOR_MATERIAL);
     //If there was any errors
     GLenum errCode;
     const GLubyte *errString;

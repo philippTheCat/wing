@@ -68,9 +68,14 @@ void vertex::setPosition(float x, float y,float z){
 }
 
 void vertex::render(){
-    
+float mcolor[] = { r,g,b, a };
+float specReflection[] = {  r,g,b, a };
+
+glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, mcolor);
+glMaterialfv(GL_FRONT, GL_SPECULAR, specReflection);
     glColor3f(r,g,b);      
     glVertex3f(x,y,z); 
+
 }
 
 string vertex::toString(){
@@ -116,9 +121,11 @@ int face::render(){
         }
 
         int size = vertexes.size();
-        //Vector3d normal = getNormal();
-        //glNormal3f(normal.x,normal.y,normal.z);
+        Vector3d normal = getNormal();
+                    //glNormal3f(normal.x,normal.y,normal.z);
+
         for (int i = 0; i<size; i++){
+            glNormal3f(normal.x,normal.y,normal.z);
             vertexes[i].render();
         }
 
@@ -172,6 +179,7 @@ Vector3d face::getNormal(){
 
 object::object(){
     this->setScale(1,1,1);
+    this->setRotation(0,0,0);
 }
 
 int object::addFace(face f){

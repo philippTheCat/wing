@@ -17,10 +17,11 @@
 //system includes
 #include <iostream>
 #include <sstream>
-//#include <windows.h>
+#include <windows.h>
 
 using namespace std;
 using std::string;
+using std::cout;
 
 //3d includes
 #include "SDL/SDL_opengl.h" 
@@ -82,6 +83,7 @@ int wi::update() {
     }
 
 
+    rotation += 3;
     return true;
 }
 
@@ -106,15 +108,28 @@ int wi::render(){
          0,1,0); 
   
 
-  //light
-  float position[]  =   {5,   5,    -5};
-  float ambient[]   =   {0.8, 0.8,  0.8, 1.0};
-  float diffuse[]   =   {0.8, 0.8,  0.8, 1.0};
+GLfloat LightAmbient[] = {0.5f, 0.5f, 0.5f, 1.0f};
+GLfloat LightDiffuse[] = {1.0f, 1.0f, 1.0f, 1.0f};
+GLfloat LightSpecular[] = {1.0f, 1.0f, 1.0f, 1.0f};
+GLfloat LightPosition[] = {0.0f, 0.0f, 2.0f, 1.0f};
 
-//    glLightfv(GL_LIGHT0, GL_AMBIENT,  ambient);
-//    glLightfv(GL_LIGHT0, GL_DIFFUSE,  diffuse);
-//    glLightfv(GL_LIGHT0, GL_POSITION, position);
-//    glEnable(GL_LIGHT0);
+glLightfv(GL_LIGHT0, GL_AMBIENT, LightAmbient);
+glLightfv(GL_LIGHT0, GL_DIFFUSE, LightDiffuse);
+glLightfv(GL_LIGHT0, GL_SPECULAR, LightSpecular);
+glLightfv(GL_LIGHT0, GL_POSITION, LightPosition);		
+
+float mcolor[] = { 1.0f, 0.0f, 0.0f, 1.0f };
+float specReflection[] = { 0.8f, 0.8f, 0.8f, 1.0f };
+
+glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, mcolor);
+glMaterialfv(GL_FRONT, GL_SPECULAR, specReflection);
+
+glEnable(GL_LIGHT0);
+
+// Lighting
+//
+glEnable(GL_LIGHTING);
+    
  glBegin(GL_TRIANGLES);
   
   vertex v1;
@@ -134,9 +149,10 @@ int wi::render(){
         f.addVertex(v1);
         f.addVertex(v3);
         f.addVertex(v4);
-        //f.render();
+        f.render();
     glEnd();
 
+    obj.setRotation(0,rotation,0);
  obj.render();
   SDL_GL_SwapBuffers();
   
@@ -145,7 +161,7 @@ int wi::render(){
 
 
 int main(int argc, char *argv[]) {
-	cout << "running" << endl;
+	cout << "running" << "\n";
 	bool testing = false;
 	for( int i = 0; i < argc; i++ )
 	{
@@ -157,8 +173,9 @@ int main(int argc, char *argv[]) {
 
         wi w;
         
-#ifdef win32
+#ifdef __WIN32__
         //fixing cout and cerr
+        
         freopen( "CON", "w", stdout );
         freopen( "CON", "w", stderr );
 #endif
